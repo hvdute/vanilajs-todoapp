@@ -181,4 +181,53 @@ Some important concepts:
         console.log(nameVar); // error undefined
         ```
 
+3. Object in Javascript  
+JavaScript is technically a Objeect-Oriented Languege. But it quite freely and not strictly as another OOP language like Java, C#,... But that in-strictly structure make JavaScript Object very flexible to work with.  
+There are some important points we need to know when working with Object:  
+    - Define an object:
+        ```javascript
+        let person = {
+          name: "Dung Hoang",
+          age: 15,
+          email: 'dunghv@dgroup.co',
+          sayHi: function() {
+            console.log(this.name);
+          }
+        };
+      ```
+    - Object is key-value structure.
+    - Key can be a string or a symbol. To access special key. We use bracket notation like this:  
+        ```javascript
+        let mySecretKey = Symbol(); 
+        let person = {
+          name: "Dung Hoang",
+          "Hello World": "Hello World here!",
+        };
+        person[mySecretKey] = 'my secret here, only mySecretKey can get into this';
+        // use bracket notation to access those special key
+        console.log(person['Hello World']); // return "Hello World here!"
+        console.log(person[mySecretKey]); // return "my ...."
+        ```
+
+4. Object constructor:  
+We can imagine that we are creating `class` for reusing object later.  
+    ```javascript
+    function Person(name, age, address) {
+      this.name = name;
+      var tmp = "Tmp"; // this is consider Object private variable and can only be exposed by using a Getter method, as sayHi() below
+      this.age = age;
+      this.address = address;
+      // defining Object methods
+      this.sayHi = function() {
+        console.log("Hello, I'm " + this.name);
+        // return a tmp private variable
+        return tmp;
+      };
+    }
+    let dungHoang = new Person("Dung", 16, "HCM");
+    console.log(dungHoang.tmp);
+    console.log(dungHoang.name); // return "Dung"
+    console.log(dungHoang.age); // return 16
+    console.log(dungHoang.address); // return .........
+    ```
 
