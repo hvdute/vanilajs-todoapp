@@ -231,3 +231,28 @@ We can imagine that we are creating `class` for reusing object later.
     console.log(dungHoang.address); // return .........
     ```
 
+5. Closures  
+Closure is the local variable of a function that still be referenced by another nested function. So that, when the parent function has been terminated, those variables are still be kept in memory. For example:
+    ```javascript
+    function sayHiFactory() {
+      let count=0; // count is still used by sayHi() function below. So when sayHiFactory() has finished executing, count still lives in memory.
+      // by this way, the getCount() method of the returned object can still increase and get count values...
+      return {
+        sayHi(name) {
+          console.log(`Hello there! I'm ${name}.`);
+          count++;
+        },
+        getCount() {
+          console.log(`I've been called ${count} times!`);
+          return count;
+        }
+      };
+    }
+    let person = sayHiFactory();
+    person.getCount(); // return "I've been called 0 times."
+    person.sayHi('Dung');
+    person.getCount(); // return "I've been called 1 times."
+    person.sayHi('Dung');
+    person.getCount(); // return "I've been called 3 times."
+    ```
+
