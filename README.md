@@ -114,3 +114,71 @@ Some useful properties and methods when working with array
     And tons of useful methods we can read for more details on this link:  
       http://devdocs.io/javascript-array/
 
+### **4. Function and Objects**  
+
+1. Functions in Javascript  
+    ```javascript
+    // this is a normal function define with parameters
+    function ageCalculator(age) {
+      // implements here
+      console.log(`Your age is ${age}. Well done!`);
+      return age;
+    }
+
+    // call it
+    ageCalculator(17); // return 17 :)))
+
+    // anonymous function, aka function without name
+    // this function can be store in a variable or pass as function parameter
+    var sayHi = function() {
+      console.log('Hello man!');
+    }
+    sayHi(); // print out "Hello man!"
+
+    // immediately invoked function, execute right immediately
+    (function(name) {
+      console.log("Hi " + name);
+    })("Dung Hoang"); // print out "Hi Dung Hoang" on console.
+    ```
+
+2. Variable scopes:  
+Some important concepts:  
+    - In Javascript, everything declare in root context is `global` available. That means you can access it everywhere in your code.
+    - JavaScript is `lexical scope`, which means anything declare in parent level can be accessed in child level.
+    - **Hoisting**  
+    Javascript automatically bring function and variables declarations to the top of that scope. For example:
+        ```javascript
+        console.log(name); // worked
+        sayHi(name); // worked
+        var name = "Dung";
+        function sayHi(name) {
+          console.log(name);
+        }
+        // this is how JS see your code
+        var name = "Dung";
+        function(name) {
+          console.log(name);
+        }
+        console.log(name);
+        sayHi(name);
+        ```
+    - **Local scope**  
+    Variable declare inside function body is `local scope`. That means it's only available inside that function. And if there is a global with the same name existed. It will be overlaped by the local variable.
+
+    - ES2015 (ES6) `let` and `const`  
+    Before ES2015, block scope is not available in Javascript. Now with the presence of `let` and `const`, we can define block scope in Javascript just like this:  
+        ```javascript
+        let globalVar = "global";
+        if (true) {
+          var nameVar = "nameVar"; // available outside this block
+          let nameLet = "nameLet"; // not available outside this block
+          const NAME = "NAME CONST"; // not available outside this block and can not be re-assigned
+          NAME = letVar; // error, cannot re-assign const
+        }
+        // test availability of those variables
+        console.log(nameVar); // return "nameVar"
+        console.log(letVar); // error, undefined
+        console.log(nameVar); // error undefined
+        ```
+
+
