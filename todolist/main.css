@@ -36,6 +36,9 @@ header {
   /* background-color: greenyellow; */
   font-size: 35px;
   display: inline;
+}
+
+.todo-text {
   color: #343a40;
 }
 
@@ -45,9 +48,9 @@ header {
   font-style: italic;
 }
 
-.todo-item input {
+/* .todo-item input {
   display: inline-block;
-}
+} */
 
 footer {
   margin: 0 !important;
@@ -57,4 +60,10 @@ footer {
 
 .todos-count {
   padding: 5px 0;
+}
+
+.test {
+  background: olivedrab;
+  width: 100px;
+  height: 50px;
 }

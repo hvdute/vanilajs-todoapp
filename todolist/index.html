@@ -14,15 +14,15 @@
       <h1 class="heading text-success">TODO LIST</h1>
       <input class="form-control form-control-lg"
         type="text" id="todo-input"
-        placeholder="What you're gonna do?">
+        placeholder="What you gonna do?">
     </header>
 
     <main>
-      <ul class="todo-list">
+      <ul class="todo-list" id="todo-list">
         <li>
           <div class="todo-item">
             <label class="custom-control custom-checkbox">
-              <input type="checkbox" name="isDone"
+              <input onchange="onChange(event)" type="checkbox" name="isDone"
                 class="custom-control-input chkbox-is-done">
               <span class="custom-control-indicator"></span>
             </label>
@@ -40,7 +40,7 @@
         </li>
       </ul>
     </main>
-    <footer class="row">
+    <footer class="row" id="footer">
         <div class="col-sm-4 todos-count">
           <h5 class="align-middle">4 items left</h5>
         </div>
@@ -57,6 +57,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+
+  <script src="js/dom-utilities.js"></script>
   <script src="js/todo.js"></script>
   <script src="js/main.js"></script>
 </html>
