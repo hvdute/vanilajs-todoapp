@@ -31,18 +31,18 @@ const todos = [
 
 // render fake datas to screen
 // const todoList = new TodoList();
-todos.map(todo => TodoListStore.add(new Todo(todo)));
+todos.map(todo => TodoListStore.add(todo));
 
 
 // event handler for #todo-input
 function addNewTodo(event) {
   if (event.key === 'Enter') {
-    let newTodo = new Todo({
+    let newTodo = {
       id: null,
       content: event.target.value,
       isDone: false,
       mode: 'view',
-    });
+    };
 
     // clear textbox
     event.target.value = "";

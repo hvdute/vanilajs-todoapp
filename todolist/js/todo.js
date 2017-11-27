@@ -1,12 +1,14 @@
 // Todo model
 (function(window) {
-  function Todo({ id, content, isDone, mode = 'view', parentReRender }) {
+  function Todo({ id, content, isDone, mode = 'view', parentUpdater }) {
     this.state = {
       id: id || (Math.random().toString(36).slice(-10)),
       content: content || "Default task...",
       isDone: isDone,
       mode,
     };
+
+    this.parentUpdater = parentUpdater;
 
     // this.id = id || (Math.random().toString(36).slice(-10));
     // this.content = content || "this is a task, you need to do";
@@ -15,7 +17,8 @@
 
   Todo.prototype.toggleStatus = function() {
     this.state.isDone = !this.state.isDone;
-    console.log(this.state);
+    // console.log(this.state);
+    this.parentUpdater(this.state.id, this.state);
   };
 
   Todo.prototype.changeMode = function(event) {
@@ -23,6 +26,7 @@
     // trigger a re-render on the todoList
     //// with todoId from event and new state
     // parentReRender(this.state.id, this.state);
+    this.parentUpdater(this.state.id, this.state);
   }
 
   Todo.prototype.setContent = function(content) {
