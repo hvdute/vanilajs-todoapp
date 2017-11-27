@@ -1,10 +1,11 @@
 // Todo model
 (function(window) {
-  function Todo(id, content) {
+  function Todo(id, content, mode = 'view', parentReRender) {
     this.state = {
       id: id || (Math.random().toString(36).slice(-10)),
       content: content || "Default task...",
       isDone: false,
+      mode,
     };
 
     // this.id = id || (Math.random().toString(36).slice(-10));
@@ -15,6 +16,14 @@
   Todo.prototype.toggleStatus = function() {
     this.state.isDone = !this.state.isDone;
   };
+
+  Todo.prototype.changeMode = function(event) {
+    this.state.mode = this.state.mode === 'view' ? 'edit' : 'view';
+
+    // trigger a re-render on the todoList
+    //// with todoId from event and new state
+    parentReRender(this.state.id, this.state);
+  }
 
   Todo.prototype.setContent = function(content) {
     if (!content) {
@@ -30,8 +39,9 @@
     let dumpEvent = () => {
       console.log('Clicked');
     };
-    const checkBox = new CheckBox(this.state.id, true, this.toggleStatus.bind(this));
-    const todoContent = new TodoContent(this.state.id, this.state.content, 'view');
+    const { id, content, mode } = this.state;
+    const checkBox = new CheckBox(id, true, this.toggleStatus.bind(this));
+    const todoContent = new TodoContent(id, content, mode, this);
     const todoItem = document.createElement('div');
       todoItem.className = 'todo-item';
       todoItem.appendChild(checkBox.render());

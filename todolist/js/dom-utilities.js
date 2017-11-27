@@ -25,7 +25,7 @@
     };
   }
 
-  function TodoContent(todoId, content, mode = 'view', eventListener) {
+  function TodoContent(todoId, content, mode, parentTodo) {
     this.state = {
       todoId,
       mode,
@@ -41,8 +41,13 @@
       input.onkeypress = (event) => {
         // for Enter to save
         // event.key == "Enter"
-        console.log(event);
-        console.log('On keypress.');
+        if (event.key == 'Enter') {
+          console.log('On Enter keypress. Change perent todos content');
+          // console.log(event);
+          parentTodo.state.content = event.target.value;
+          parentTodo.changeMode();
+          console.log(parentTodo.state);
+        }
       };
     const h3 = document.createElement('h3');
       h3.className = 'col-sm-11 todo-content';
@@ -50,17 +55,18 @@
         // double click to edit
         console.log(event);
         console.log('Double clicked on this todo');
+        parentTodo.changeMode();
       };
-      
+
     this.render = function() {
       if (this.state.mode === 'view') {
         let content = document.createTextNode(this.state.content);
         h3.appendChild(content);
-        div.appendChild(h3);
+        // div.appendChild(h3);
         return h3;
-      } else {
-        input.defaultValue = this.statte.content;
-        div.appendChild(input);
+      } else if (this.state.mode === 'edit') {
+        input.defaultValue = this.state.content;
+        // div.appendChild(input);
         return input;
       }
     }
