@@ -25,11 +25,12 @@
     };
   }
 
-  function TodoContent(todoId, content, mode, parentTodo) {
+  function TodoContent(todoId, content, mode, isDone, parentTodo) {
     this.state = {
       todoId,
       mode,
       content: content || "",
+      isDone
     };
 
     // create a div here to wrap content.
@@ -50,7 +51,7 @@
         }
       };
     const h3 = document.createElement('h3');
-      h3.className = 'col-sm-11 todo-content';
+      h3.className = this.state.isDone ? 'col-sm-11 todo-content done' : 'col-sm-11 todo-content';
       h3.ondblclick = (event) => {
         // double click to edit
         console.log(event);

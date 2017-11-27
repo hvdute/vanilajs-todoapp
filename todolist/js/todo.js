@@ -36,9 +36,9 @@
   // Todo DOM builder
   // render return a DOM todo item
   Todo.prototype.render = function() {
-    const { id, content, mode } = this.state;
+    const { id, content, mode, isDone } = this.state;
     const checkBox = new CheckBox(id, this.state.isDone, this.toggleStatus.bind(this));
-    const todoContent = new TodoContent(id, content, mode, this);
+    const todoContent = new TodoContent(id, content, mode, isDone, this);
     const todoItem = document.createElement('div');
       todoItem.className = 'todo-item';
       todoItem.appendChild(checkBox.render());
