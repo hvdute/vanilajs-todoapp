@@ -33,5 +33,5 @@
 // this.render();
   };
 
-  window.TodoList = TodoList;
+  window.TodoListStore = new TodoList();
 })(window);
