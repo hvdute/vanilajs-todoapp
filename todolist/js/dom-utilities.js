@@ -14,7 +14,7 @@
     input.setAttribute("todoId", this.state.todoId);
     input.setAttribute('type', 'checkbox');
     input.addEventListener('change', eventListener);
-
+    input.checked = isDone;
     const span = document.createElement('span');
     span.className = 'custom-control-indicator';
 
@@ -54,7 +54,7 @@
       h3.ondblclick = (event) => {
         // double click to edit
         console.log(event);
-        console.log('Double clicked on this todo');
+        console.log('Double clicked on this todo: ' + this.state.todoId);
         parentTodo.changeMode();
       };
 

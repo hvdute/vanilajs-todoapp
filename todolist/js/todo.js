@@ -1,10 +1,10 @@
 // Todo model
 (function(window) {
-  function Todo(id, content, mode = 'view', parentReRender) {
+  function Todo({ id, content, isDone, mode = 'view', parentReRender }) {
     this.state = {
       id: id || (Math.random().toString(36).slice(-10)),
       content: content || "Default task...",
-      isDone: false,
+      isDone: isDone,
       mode,
     };
 
@@ -15,14 +15,14 @@
 
   Todo.prototype.toggleStatus = function() {
     this.state.isDone = !this.state.isDone;
+    console.log(this.state);
   };
 
   Todo.prototype.changeMode = function(event) {
     this.state.mode = this.state.mode === 'view' ? 'edit' : 'view';
-
     // trigger a re-render on the todoList
     //// with todoId from event and new state
-    parentReRender(this.state.id, this.state);
+    // parentReRender(this.state.id, this.state);
   }
 
   Todo.prototype.setContent = function(content) {
@@ -36,11 +36,8 @@
   // Todo DOM builder
   // render return a DOM todo item
   Todo.prototype.render = function() {
-    let dumpEvent = () => {
-      console.log('Clicked');
-    };
     const { id, content, mode } = this.state;
-    const checkBox = new CheckBox(id, true, this.toggleStatus.bind(this));
+    const checkBox = new CheckBox(id, this.state.isDone, this.toggleStatus.bind(this));
     const todoContent = new TodoContent(id, content, mode, this);
     const todoItem = document.createElement('div');
       todoItem.className = 'todo-item';
