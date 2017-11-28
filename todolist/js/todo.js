@@ -45,8 +45,12 @@
     const todoContent = new TodoContent(id, content, mode, isDone, this);
     const todoItem = document.createElement('div');
       todoItem.className = 'todo-item';
+    if (mode === "view") {
       todoItem.appendChild(checkBox.render());
       todoItem.appendChild(todoContent.render());
+    } else {
+      todoItem.appendChild(todoContent.render());
+    }
     return todoItem;
   };
 

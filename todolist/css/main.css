@@ -38,8 +38,9 @@ header {
   display: inline;
 }
 
-.todo-text {
-  color: #343a40;
+.todo-update {
+  width: 100%;
+  margin: 0 10px;
 }
 
 .done {

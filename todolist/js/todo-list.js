@@ -18,9 +18,7 @@
       li.appendChild(todo.render());
       this.todoListDOM.appendChild(li);
     });
-
-    // this.todoListDOM.replaceChild(this.state.todosDOM, this.todoListDOM.children);
-  }
+  };
 
   TodoList.prototype.add = function(todo) {
     todo.parentUpdater = this.update.bind(this);
@@ -37,13 +35,19 @@
   // update an TodoItem (re-render)
   TodoList.prototype.update = function(todoId, newState) {
     // empty that Item first
-    console.log('Updated/Re-rendered item ${todoId}');
+    console.log(`Updated/Re-rendered item ${todoId}`);
     const todoLi = document.querySelector(`li[todoid="${todoId}"]`);
 
     // add updater to TodoItem state;
     newState.parentUpdater = this.update.bind(this);
     const newTodo = new Todo(newState);
     todoLi.replaceChild(newTodo.render(), todoLi.children[0]);
+
+    // autofocus on new input box and select all text inside
+    if (newState.mode === 'edit') {
+      todoLi.querySelector('input').focus();
+      todoLi.querySelector('input').select();
+    }
   };
 
   window.TodoListStore = new TodoList();

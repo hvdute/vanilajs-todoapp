@@ -37,19 +37,27 @@
     const div = document.createElement('div');
       div.className = 'todo-content';
     const input = document.createElement('input');
-      input.className = "control-lg";
+      input.className = "form-control-lg todo-update";
       input.setAttribute('todoId', this.state.todoId);
       input.onkeypress = (event) => {
         // for Enter to save
         // event.key == "Enter"
-        if (event.key == 'Enter') {
-          console.log('On Enter keypress. Change perent todos content');
-          // console.log(event);
-          parentTodo.state.content = event.target.value;
-          parentTodo.changeMode();
-          console.log(parentTodo.state);
+        if (event.key === 'Enter') {
+          if (event.target.value !== '') {
+            parentTodo.state.content = event.target.value;
+            parentTodo.changeMode();
+          } else {
+            alert('Please enter a todo...');
+          }
         }
       };
+
+      input.onkeydown = (event) => {
+        if (event.key === 'Escape') {
+          parentTodo.changeMode();
+        }
+      }
+
     const h3 = document.createElement('h3');
       h3.className = this.state.isDone ? 'col-sm-11 todo-content done' : 'col-sm-11 todo-content';
       h3.ondblclick = (event) => {
@@ -67,7 +75,6 @@
         return h3;
       } else if (this.state.mode === 'edit') {
         input.defaultValue = this.state.content;
-        // div.appendChild(input);
         return input;
       }
     }
