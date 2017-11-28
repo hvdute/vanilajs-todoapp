@@ -61,11 +61,23 @@
     this.state.todos.push(newTodo);
     const li = document.createElement('li');
     li.setAttribute('todoId', newTodo.state.id);
-    // const todoDOM = new Todo(todo);
+
     this.state.todosDOM.push(newTodo.render());
     li.appendChild(newTodo.render());
     this.todoListDOM.prepend(li);
   };
+
+  TodoList.prototype.delete = function(todoId, state) {
+    // remove for todos Store
+    const todoIndex = this.state.todos.findIndex(todo => {
+      return todo.state.id === todoId;
+    });
+    this.state.todos.splice(todoIndex, 1);
+
+    // select DOM item to delete
+    const todo = this.todoListDOM.querySelector(`li[todoid='${todoId}']`);
+    this.todoListDOM.removeChild(todo);
+  }
 
   // check for current updating status of TodoListStore
   TodoList.prototype.parentUpdater = function(todoId, newState) {
@@ -83,6 +95,8 @@
         this.state.updatingItem = newState;
         this.update(todoId, newState);
       }
+    } if (newState.mode === 'delete') {
+      this.delete(todoId);
     } else {
       if (this.state.updatingItem && this.state.updatingItem.mode === 'edit') {
         this.state.updatingItem = null;

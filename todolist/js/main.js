@@ -1,5 +1,5 @@
 // get DOM utilities
-const { CheckBox, TodoContent } = window.DOMUtilities;
+const { CheckBox, TodoContent, DeleteButton } = window.DOMUtilities;
 
 // initial render to screen
 TodoListStore.render();

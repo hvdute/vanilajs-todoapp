@@ -31,17 +31,24 @@
     }
   };
 
+  Todo.prototype.delete = function() {
+    this.state.mode = 'delete';
+    this.parentUpdater(this.state.id, this.state);
+  };
+
   // Todo DOM builder
   // render return a DOM todo item
   Todo.prototype.render = function() {
     const { id, content, mode, isDone } = this.state;
     const checkBox = new CheckBox(id, this.state.isDone, this.toggleStatus.bind(this));
     const todoContent = new TodoContent(id, content, mode, isDone, this);
+    const deleteButton = new DeleteButton(id, this.delete.bind(this));
     const todoItem = document.createElement('div');
       todoItem.className = 'todo-item';
     if (mode === "view") {
       todoItem.appendChild(checkBox.render());
       todoItem.appendChild(todoContent.render());
+      todoItem.appendChild(deleteButton.render());
     } else {
       todoItem.appendChild(todoContent.render());
     }

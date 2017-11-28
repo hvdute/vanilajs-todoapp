@@ -79,8 +79,25 @@
     }
   }
 
+  function DeleteButton(todoId, deleteHandler) {
+    const textNode = document.createTextNode('Delete');
+    const button = document.createElement('button');
+      button.className = "btn btn-danger rounded float-right delete-button"
+      button.setAttribute('todoid', todoId);
+      button.onclick = function(event) {
+        event.preventDefault();
+        deleteHandler(todoId, );
+      };
+      button.appendChild(textNode);
+
+    this.render = function() {
+      return button;
+    }
+  }
+
   window.DOMUtilities = {
     CheckBox,
     TodoContent,
+    DeleteButton,
   };
 })(window);
