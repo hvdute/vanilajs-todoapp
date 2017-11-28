@@ -30,7 +30,7 @@
   function TodoList() {
     this.state = {
       todos: [],
-      todosDOM: [],
+      // todosDOM: [],
       updatingItem: null,
     };
 
@@ -49,25 +49,38 @@
       const li = document.createElement('li');
         li.setAttribute('todoId', todo.state.id);
       // const todoDOM = new Todo(todo);
-      this.state.todosDOM.push(todo.render());
+      // this.state.todosDOM.push(todo.render());
       li.appendChild(todo.render());
       this.todoListDOM.appendChild(li);
     });
   };
 
+  TodoList.prototype.cancelEditing = function() {
+    // cancel any updating item
+    if (this.state.updatingItem) {
+      const { updatingItem } = this.state;
+      updatingItem.mode = 'view';
+      this.update(updatingItem.id, updatingItem);
+    }
+  };
+
   TodoList.prototype.add = function(todo) {
+    this.cancelEditing();
     todo.parentUpdater = this.parentUpdater.bind(this);
     let newTodo = new Todo(todo);
     this.state.todos.push(newTodo);
     const li = document.createElement('li');
     li.setAttribute('todoId', newTodo.state.id);
 
-    this.state.todosDOM.push(newTodo.render());
+    // this.state.todosDOM.push(newTodo.render());
     li.appendChild(newTodo.render());
     this.todoListDOM.prepend(li);
   };
 
   TodoList.prototype.delete = function(todoId, state) {
+    // cancel any updating item
+    this.cancelEditing();
+
     // remove for todos Store
     const todoIndex = this.state.todos.findIndex(todo => {
       return todo.state.id === todoId;
@@ -87,19 +100,20 @@
         this.update(todoId, newState);
       } else {
         // cancel current editing Item
-        const { updatingItem } = this.state;
-        updatingItem.mode = 'view';
-        this.update(updatingItem.id, updatingItem);
+        this.cancelEditing();
 
         // update new editing Item
         this.state.updatingItem = newState;
         this.update(todoId, newState);
       }
-    } if (newState.mode === 'delete') {
+    } else if (newState.mode === 'delete') {
       this.delete(todoId);
     } else {
       if (this.state.updatingItem && this.state.updatingItem.mode === 'edit') {
         this.state.updatingItem = null;
+        this.update(todoId, newState);
+      } else {
+        // this is toggling status of a Item
         this.update(todoId, newState);
       }
     }
