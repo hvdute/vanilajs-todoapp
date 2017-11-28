@@ -62,7 +62,6 @@
       h3.className = this.state.isDone ? 'col-sm-11 todo-content done' : 'col-sm-11 todo-content';
       h3.ondblclick = (event) => {
         // double click to edit
-        console.log(event);
         console.log('Double clicked on this todo: ' + this.state.todoId);
         parentTodo.changeMode();
       };

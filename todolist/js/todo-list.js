@@ -1,14 +1,49 @@
 (function(window) {
+  // fake data for initial render
+  const todos = [
+    {
+      id: null,
+      content: 'TodoList 1',
+      isDone: false,
+      mode: 'view'
+    },
+    {
+      id: null,
+      content: 'Refactor Todo model',
+      isDone: true,
+      mode: 'view'
+    },
+    {
+      id: null,
+      content: 'Third TodoItem',
+      isDone: true,
+      mode: 'view'
+    },
+    {
+      id: null,
+      content: 'Complete TodoList',
+      isDone: false,
+      mode: 'view'
+    },
+  ];
+
   function TodoList() {
     this.state = {
       todos: [],
       todosDOM: [],
+      updatingItem: null,
     };
 
     this.todoListDOM = document.querySelector('#todo-list');
   }
 
+  // initial render
   TodoList.prototype.render = function() {
+    todos.map(todo => {
+      todo.parentUpdater = this.parentUpdater.bind(this);
+      this.state.todos.push(new Todo(todo));
+    });
+
     this.todoListDOM.innerHTML = "";
     this.state.todos.map(todo => {
       const li = document.createElement('li');
@@ -21,7 +56,7 @@
   };
 
   TodoList.prototype.add = function(todo) {
-    todo.parentUpdater = this.update.bind(this);
+    todo.parentUpdater = this.parentUpdater.bind(this);
     let newTodo = new Todo(todo);
     this.state.todos.push(newTodo);
     const li = document.createElement('li');
@@ -32,6 +67,30 @@
     this.todoListDOM.prepend(li);
   };
 
+  // check for current updating status of TodoListStore
+  TodoList.prototype.parentUpdater = function(todoId, newState) {
+    if (newState.mode === 'edit') {
+      if (!this.state.updatingItem) {
+        this.state.updatingItem = newState;
+        this.update(todoId, newState);
+      } else {
+        // cancel current editing Item
+        const { updatingItem } = this.state;
+        updatingItem.mode = 'view';
+        this.update(updatingItem.id, updatingItem);
+
+        // update new editing Item
+        this.state.updatingItem = newState;
+        this.update(todoId, newState);
+      }
+    } else {
+      if (this.state.updatingItem && this.state.updatingItem.mode === 'edit') {
+        this.state.updatingItem = null;
+        this.update(todoId, newState);
+      }
+    }
+  };
+
   // update an TodoItem (re-render)
   TodoList.prototype.update = function(todoId, newState) {
     // empty that Item first
@@ -39,7 +98,7 @@
     const todoLi = document.querySelector(`li[todoid="${todoId}"]`);
 
     // add updater to TodoItem state;
-    newState.parentUpdater = this.update.bind(this);
+    newState.parentUpdater = this.parentUpdater.bind(this);
     const newTodo = new Todo(newState);
     todoLi.replaceChild(newTodo.render(), todoLi.children[0]);
 

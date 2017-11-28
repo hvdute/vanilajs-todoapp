@@ -7,21 +7,15 @@
       isDone: isDone,
       mode,
     };
-
     this.parentUpdater = parentUpdater;
-
-    // this.id = id || (Math.random().toString(36).slice(-10));
-    // this.content = content || "this is a task, you need to do";
-    // this.done = false;
   }
 
   Todo.prototype.toggleStatus = function() {
     this.state.isDone = !this.state.isDone;
-    // console.log(this.state);
     this.parentUpdater(this.state.id, this.state);
   };
 
-  Todo.prototype.changeMode = function(event) {
+  Todo.prototype.changeMode = function() {
     this.state.mode = this.state.mode === 'view' ? 'edit' : 'view';
     // trigger a re-render on the todoList
     //// with todoId from event and new state
