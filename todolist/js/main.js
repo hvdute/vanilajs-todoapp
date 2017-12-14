@@ -1,5 +1,4 @@
-// get DOM utilities
-const { CheckBox, TodoContent, DeleteButton } = window.DOMUtilities;
+import { TodoListStore } from './todo-list.js';
 
 // initial render to screen
 TodoListStore.render();
@@ -19,3 +18,5 @@ function addNewTodo(event) {
     TodoListStore.add(newTodo);
   }
 }
+
+window.addNewTodo = addNewTodo;

@@ -1,4 +1,6 @@
-(function(window) {
+import Todo from './todo.js';
+
+// (function(window) {
   // fake data for initial render
   const todos = [
     {
@@ -21,7 +23,7 @@
     },
     {
       id: null,
-      content: 'Complete TodoList',
+      content: 'Complete TodoList 2',
       isDone: false,
       mode: 'view'
     },
@@ -137,5 +139,5 @@
     }
   };
 
-  window.TodoListStore = new TodoList();
-})(window);
+  export const TodoListStore = new TodoList();
+// })(window);
